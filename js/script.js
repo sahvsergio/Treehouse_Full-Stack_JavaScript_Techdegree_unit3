@@ -11,6 +11,15 @@ the focus state by default to prompt the use*/
     //name should start wit
     nameInput.focus();
 }
+function jobHandler(){
+    //hide the other job input text by default  
+   otherJob.hidden=true;
+   
+ 
 
 
-focusName();hadndleJobtitle();
+}
+ 
+
+focusName();
+jobHandler();
