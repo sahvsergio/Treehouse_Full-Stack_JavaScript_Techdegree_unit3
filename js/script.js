@@ -3,6 +3,7 @@ let formElement=document.querySelector('form');
 let nameInput=document.getElementById('name');
 let otherJob=document.getElementById('other-job-role');
 let jobTitle=document.getElementById('title');
+let design=document.getElementById('design');
 let colorSelect=document.getElementById('color');
 
 function focusName(){
@@ -24,6 +25,10 @@ function jobHandler(){
 
     }else{
         otherJob.hidden=true;
+      
+
+
+
     }
   
     
@@ -35,6 +40,20 @@ function jobHandler(){
 
 function handleColor(){
     colorSelect.disabled=true;
+    
+     design.addEventListener('change',(e)=>{
+            let designValue=e.target.value;
+            console.log(designValue);
+            //js puns or heart js
+            if (designValue){
+                colorSelect.disabled=false;
+
+            }else{
+                colorSelect.disabled=true;
+            }
+            
+        
+     });
 
 
 }  
