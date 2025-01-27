@@ -29,7 +29,15 @@ function jobHandler(){
     
     
    });
-    
+}
+
+   
+
+function handleColor(){
+    colorSelect.disabled=true;
+
+
+}  
 
 
 
@@ -42,7 +50,6 @@ function jobHandler(){
 
 
 
-}
    
     
 
@@ -51,3 +58,4 @@ function jobHandler(){
 
 focusName();
 jobHandler();
+handleColor();
