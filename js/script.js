@@ -14,11 +14,39 @@ the focus state by default to prompt the use*/
 function jobHandler(){
     //hide the other job input text by default  
    otherJob.hidden=true;
+   jobTitle.addEventListener('change',(e)=>{
+    //collect the target value
+    let titleValue=e.target.value;
+    console.log(titleValue);
+    if (titleValue==='other'){
+        otherJob.hidden=false;
+
+
+    }else{
+        otherJob.hidden=true;
+    }
+  
+    
+    
+   });
+    
+
+
+
+
    
- 
+     
+
+    
+
+
 
 
 }
+   
+    
+
+
  
 
 focusName();
