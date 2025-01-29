@@ -68,24 +68,45 @@ function handleColor(){
 }
 
 function addActivitiesCost(){
+    let dates=[];
     let totalActivitiesCost=0;
     activities.addEventListener('change', (e)=>{
         let targetCost=e.target.getAttribute('data-cost');
-        console.log(targetCost);
-        targetCostNum=+targetCost
-        console.log(typeof targetCostNum);
+        let targetDate=e.target.getAttribute('data-day-and-time');
+       
+        targetCostNum=+targetCost;
+        
+
+        
 
         if (e.target.checked){
-            totalActivitiesCost+=targetCostNum;
-            console.log(totalActivitiesCost)
-            totalCost.innerHTML=`$${totalActivitiesCost}`;
-          
+           
+            if (dates.includes(e.target.getAttribute('data-day-and-time'))){
+                
+                e.target.closest('input').disabled=true;
+                e.target.closest('input').hidden=true;
+                
+                
+            }
+            else{
+                 dates.push(targetDate);
+                 
+                 totalActivitiesCost+=targetCostNum;
+                 totalCost.innerHTML=`$${totalActivitiesCost}`;
+                
+                 
+
+            }
 
         }
         else{
             totalActivitiesCost-=targetCostNum;
-            console.log(totalActivitiesCost);
+            
+          
+            
             totalCost.innerHTML=`$${totalActivitiesCost}`;
+           git 
+           
         }
           
     });
