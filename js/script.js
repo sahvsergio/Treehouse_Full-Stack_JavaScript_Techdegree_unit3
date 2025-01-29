@@ -68,59 +68,36 @@ function handleColor(){
     });
 }
 
-function addActivitiesCost(){
-    let dates=[];
-    let totalActivitiesCost=0;
-    activities.addEventListener('change', (e)=>{
-        let targetCost=e.target.getAttribute('data-cost');
-        let targetDate=e.target.getAttribute('data-day-and-time');
-       
-        targetCostNum=+targetCost;
-        
+function addActivitiesCost() {
+  let totalActivitiesCost = 0;
 
-        
+  activities.addEventListener('change', (e) => {
+    let targetCost = Number(e.target.getAttribute('data-cost'));
+    let targetDate = e.target.getAttribute('data-day-and-time')
 
-        if (e.target.checked){
-            for (let i=0;i<activityCheckboxes.length;i++){
-           
-           
-            if (dates.includes(e.target.getAttribute('data-day-and-time'))){
-                
-                e.target.closest('input').disabled=true;
-                e.target.closest('input').hidden=true;
-                e.target.closest('input').checked=false;
-                
-                
-            }
-            else{
-                 dates.push(targetDate);
-                 
-                 
-                 totalActivitiesCost+=targetCostNum;
-                 totalCost.innerHTML=`$${totalActivitiesCost}`;
-                
-                 
 
-            }
-            }
-
+    if (e.target.checked) {
+      totalActivitiesCost += targetCost
+      totalCost.innerHTML=`$${totalActivitiesCost}`;
+      for (let i = 0; i < activityCheckboxes.length; i++) {
+        let targetActivityDate = activityCheckboxes[i].getAttribute('data-day-and-time');
+        if (!activityCheckboxes[i].checked && targetDate === targetActivityDate) {
+          activityCheckboxes[i].disabled = true;
+          activityCheckboxes[i].parentElement.className = 'disabled';
         }
-        else{
-            for (let i=0;i<activityCheckboxes.length;i++){
-                  if (dates.includes(e.target.getAttribute('data-day-and-time'))){
-                    e.target.checked=false;
-                    e.target.disabled=false;
-                    totalActivitiesCost-=targetCostNum;
-                    totalCost.innerHTML=`$${totalActivitiesCost}`;
-                   
-                  }
-                  
-                
-           }
+      }
+    } else {
+      totalActivitiesCost -= targetCost
+      totalCost.innerHTML=`$${totalActivitiesCost}`;
+      for (let i = 0; i < activityCheckboxes.length; i++) {
+        let targetActivityDate = activityCheckboxes[i].getAttribute('data-day-and-time');
+        if (targetActivityDate === targetDate) {
+          activityCheckboxes[i].disabled = false;
+          activityCheckboxes[i].parentElement.className = '';
         }
-          
-    });
-    
+      }
+    }
+  });
 }
 
 
