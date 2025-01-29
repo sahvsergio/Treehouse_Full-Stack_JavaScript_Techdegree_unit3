@@ -56,6 +56,7 @@ function handleColor(){
                 colorOptions[i].hidden=false;
                 colorOptions[i].disabled=false;
                 
+                
             
             }
         }
@@ -80,16 +81,20 @@ function addActivitiesCost(){
         
 
         if (e.target.checked){
+            for (let i=0;i<activityCheckboxes.length;i++){
+           
            
             if (dates.includes(e.target.getAttribute('data-day-and-time'))){
                 
                 e.target.closest('input').disabled=true;
                 e.target.closest('input').hidden=true;
+                e.target.closest('input').checked=false;
                 
                 
             }
             else{
                  dates.push(targetDate);
+                 
                  
                  totalActivitiesCost+=targetCostNum;
                  totalCost.innerHTML=`$${totalActivitiesCost}`;
@@ -97,16 +102,21 @@ function addActivitiesCost(){
                  
 
             }
+            }
 
         }
         else{
-            totalActivitiesCost-=targetCostNum;
-            
-          
-            
-            totalCost.innerHTML=`$${totalActivitiesCost}`;
-           git 
-           
+            for (let i=0;i<activityCheckboxes.length;i++){
+                  if (dates.includes(e.target.getAttribute('data-day-and-time'))){
+                    e.target.checked=false;
+                    e.target.disabled=false;
+                    totalActivitiesCost-=targetCostNum;
+                    totalCost.innerHTML=`$${totalActivitiesCost}`;
+                   
+                  }
+                  
+                
+           }
         }
           
     });
