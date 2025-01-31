@@ -1,6 +1,11 @@
 //select all the current elements in the page
 let formElement = document.querySelector("form");
 let nameInput = document.getElementById("name");
+let emailInput = document.getElementById("email");
+let creditCardInput = document.getElementById('cc-num"');
+let zipcodeInput = document.getElementById("zip");
+let ccvInput = document.getElementById("cvv");
+
 let otherJob = document.getElementById("other-job-role");
 let jobTitle = document.getElementById("title");
 let design = document.getElementById("design");
@@ -11,15 +16,13 @@ let activities = document.getElementById("activities");
 
 let activityCheckboxes = document.querySelectorAll("input[type='checkbox']");
 let paymentSelect = document.getElementById("payment");
-let creditCardDiv=document.getElementById('credit-card');
-let paypalDiv=document.getElementById('paypal');  
-let bitCoinDiv=document.getElementById('bitcoin');
+let creditCardDiv = document.getElementById("credit-card");
+let paypalDiv = document.getElementById("paypal");
+let bitCoinDiv = document.getElementById("bitcoin");
 
-let paymentOptions=paymentSelect.children;
+let paymentOptions = paymentSelect.children;
 
-
-
-function focusName() {  
+function focusName() {
   /*When the page first loads, the first text field should have
 the focus state by default to prompt the use*/
   //name should start wit
@@ -103,43 +106,84 @@ function addActivitiesCost() {
 function handlePayment() {
   //page loads
   //load credit card
-  let ccPayment=paymentOptions[1].selected = true;
+  let ccPayment = (paymentOptions[1].selected = true);
   paypalDiv.hidden = true;
   paypalDiv.disabled = true;
   bitCoinDiv.hidden = true;
   bitCoinDiv.disabled = true;
-  
-  paymentSelect.addEventListener('change',(e)=>{
-    if (paymentSelect.value==='bitcoin'){
-      creditCardDiv.hidden=true;
-      creditCardDiv.disabled=true;
-      paypalDiv.hidden=true;
-      paypalDiv.disabled=true;
-      bitCoinDiv.hidden=false;
-      bitCoinDiv.disabled=false;
-    }else if(paymentSelect.value==='paypal'){
+
+  paymentSelect.addEventListener("change", (e) => {
+    if (paymentSelect.value === "bitcoin") {
+      creditCardDiv.hidden = true;
+      creditCardDiv.disabled = true;
+      paypalDiv.hidden = true;
+      paypalDiv.disabled = true;
+      bitCoinDiv.hidden = false;
+      bitCoinDiv.disabled = false;
+    } else if (paymentSelect.value === "paypal") {
       creditCardDiv.hidden = true;
       creditCardDiv.disabled = true;
       bitCoinDiv.hidden = true;
       bitCoinDiv.disabled = true;
       paypalDiv.hidden = false;
       paypalDiv.disabled = false;
-    }
-    else{
+    } else {
       paypalDiv.hidden = true;
       paypalDiv.disabled = true;
       bitCoinDiv.hidden = true;
       bitCoinDiv.disabled = true;
-      creditCardDiv.hidden=false;
-  
+      creditCardDiv.hidden = false;
+    }
+  });
+}
+
+function formSubmission() {
+  formElement.addEventListener("submit", (e) => {
+    e.preventDefault();
+    let nameRegEx = /^(?!.*\d+.*)[a-zA-ZÀ-ÿ]+$/;
+    let emailRegEx=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
+
+     let nameValue = nameInput.value;
+     let emailValue=emailInput.value;
+
+    let nameHint = document.querySelector("#name-hint");
+   
+
+    let isValidName = nameRegEx.test(nameValue);
+    let isValidEmail=emailRegEx.test(emailValue);
+    //if value input contains an empty string
+
+    if(nameValue===''){
+        e.preventDefault();
+      nameHint.style.display='block';
+      nameHint.parentNode.classList.add('not-valid');
+
     }
 
-  });
+    else{
+      //check if the name is a valid one
+      if (isValidName){
+        console.log(nameValue);
+        nameHint.innerText = "This is a valid name";
+        nameHint.classList.add('valid');
+        nameHint.style.display='block';
+      }
+      else{
+        
+        nameHint.innerText='This is not a valid value for a name'
+        nameHint.style.display='block';
+        nameHint.parentNode.classList.add('not-valid');
+        
+      }
+    }
 
- 
+  })
 }
+
 focusName();
 jobHandler();
 handleColor();
 addActivitiesCost();
 handlePayment();
+formSubmission();
