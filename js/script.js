@@ -38,7 +38,7 @@ function jobHandler() {
   jobTitle.addEventListener("change", (e) => {
     //collect the target value
     let titleValue = e.target.value;
-    console.log(titleValue);
+    
     if (titleValue === "other") {
       otherJob.hidden = false;
       otherJob.disabled = true;
@@ -172,7 +172,7 @@ function formSubmission() {
     else{
       //check if the name is a valid one
       if (isValidName){
-        console.log(email);
+      
         nameHint.innerText = "This is a valid name";
         nameHint.classList.add('valid');
         nameHint.style.display='block';
@@ -191,19 +191,24 @@ function formSubmission() {
        emailHint.style.display = "block";
        emailHint.parentNode.classList.add("not-valid");
        emailHint.innerText='The email field cannot be empty';
-     } else {
+     } 
+     if(isValidEmail) {
        //check if the name is a valid one
-       if (isValidEmail) {
-         console.log(nameValue);
+      
          emailHint.innerText = "This is a valid email";
          emailHint.classList.add("valid");
          emailHint.style.display = "block";
-       } else {
-         emailHint.innerText = "This is not a valid value for an email";
-         emailHint.style.display = "block";
-         emailHint.parentNode.classList.add("not-valid");
-       }
      }
+     else{
+      emailHint.innerText = "This is not a valid email";
+         emailHint.classList.add("not-valid");
+         emailHint.style.display = "block";
+     }
+     
+     
+
+
+ 
     
 
   });
