@@ -20,6 +20,7 @@ let creditCardDiv = document.getElementById("credit-card");
 let paypalDiv = document.getElementById("paypal");
 let bitCoinDiv = document.getElementById("bitcoin");
 
+
 let paymentOptions = paymentSelect.children;
 
 function focusName() {
@@ -142,18 +143,25 @@ function formSubmission() {
     e.preventDefault();
     let nameRegEx = /^(?!.*\d+.*)[a-zA-ZÀ-ÿ]+$/;
     let emailRegEx=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    let ccRegEx=/^\d{13,16}$/;
 
-
+//Assing values
      let nameValue = nameInput.value;
      let emailValue=emailInput.value;
+     
 
+// identify hints for all required fields 
     let nameHint = document.querySelector("#name-hint");
+    let emailHint = document.querySelector("#email-hint");
+    let ccHint=document.querySelector('#cc-hint');
    
-
+    //regexes testing variables
     let isValidName = nameRegEx.test(nameValue);
     let isValidEmail=emailRegEx.test(emailValue);
-    //if value input contains an empty string
+  
 
+    let tickedOn=0;
+    // Validations for name value
     if(nameValue===''){
         e.preventDefault();
       nameHint.style.display='block';
@@ -164,7 +172,7 @@ function formSubmission() {
     else{
       //check if the name is a valid one
       if (isValidName){
-        console.log(nameValue);
+        console.log(email);
         nameHint.innerText = "This is a valid name";
         nameHint.classList.add('valid');
         nameHint.style.display='block';
@@ -177,8 +185,28 @@ function formSubmission() {
         
       }
     }
+    //Validations for email value 
+     if (emailValue === "") {
+       e.preventDefault();
+       emailHint.style.display = "block";
+       emailHint.parentNode.classList.add("not-valid");
+       emailHint.innerText='The email field cannot be empty';
+     } else {
+       //check if the name is a valid one
+       if (isValidEmail) {
+         console.log(nameValue);
+         emailHint.innerText = "This is a valid email";
+         emailHint.classList.add("valid");
+         emailHint.style.display = "block";
+       } else {
+         emailHint.innerText = "This is not a valid value for an email";
+         emailHint.style.display = "block";
+         emailHint.parentNode.classList.add("not-valid");
+       }
+     }
+    
 
-  })
+  });
 }
 
 focusName();
