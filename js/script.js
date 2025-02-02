@@ -2,7 +2,7 @@
 let formElement = document.querySelector("form");
 let nameInput = document.getElementById("name");
 let emailInput = document.getElementById("email");
-let creditCardInput = document.getElementById('cc-num"');
+let creditCardInput = document.getElementById("cc-num");
 let zipcodeInput = document.getElementById("zip");
 let ccvInput = document.getElementById("cvv");
 
@@ -13,13 +13,14 @@ let colorSelect = document.getElementById("color");
 let colorOptions = document.querySelectorAll("option[data-theme]");
 let totalCost = document.getElementById("activities-cost");
 let activities = document.getElementById("activities");
+let ccfieldset = document.querySelector(".payment-methods");
+let activitiesLegend = document.querySelector("#activities legend");
 
 let activityCheckboxes = document.querySelectorAll("input[type='checkbox']");
 let paymentSelect = document.getElementById("payment");
 let creditCardDiv = document.getElementById("credit-card");
 let paypalDiv = document.getElementById("paypal");
 let bitCoinDiv = document.getElementById("bitcoin");
-
 
 let paymentOptions = paymentSelect.children;
 
@@ -38,7 +39,7 @@ function jobHandler() {
   jobTitle.addEventListener("change", (e) => {
     //collect the target value
     let titleValue = e.target.value;
-    
+
     if (titleValue === "other") {
       otherJob.hidden = false;
       otherJob.disabled = true;
@@ -140,77 +141,136 @@ function handlePayment() {
 
 function formSubmission() {
   formElement.addEventListener("submit", (e) => {
-    e.preventDefault();
     let nameRegEx = /^(?!.*\d+.*)[a-zA-ZÀ-ÿ]+$/;
-    let emailRegEx=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    let ccRegEx=/^\d{13,16}$/;
+    let emailRegEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    let ccRegEx = /^\d{13,16}$/;
+    let zipRegEx = /^\d{5}$/;
+    let ccvReGex = /^\d{3}$/;
 
-//Assing values
-     let nameValue = nameInput.value;
-     let emailValue=emailInput.value;
-     
+    //Assing values
+    let nameValue = nameInput.value;
+    let emailValue = emailInput.value;
+    let ccValue = creditCardInput.value;
+    let zipValue = zipcodeInput.value;
+    let ccvValue = ccvInput.value;
 
-// identify hints for all required fields 
+    // identify hints for all required fields
     let nameHint = document.querySelector("#name-hint");
     let emailHint = document.querySelector("#email-hint");
-    let ccHint=document.querySelector('#cc-hint');
-   
+    let checkboxesHint = document.querySelector("#activities-hint");
+    let ccHint = document.querySelector("#cc-hint");
+    let zipHint = document.querySelector("#zip-hint");
+    let ccvHint = document.querySelector("#cvv-hint");
+
     //regexes testing variables
     let isValidName = nameRegEx.test(nameValue);
-    let isValidEmail=emailRegEx.test(emailValue);
-  
+    let isValidEmail = emailRegEx.test(emailValue);
+    let isValidCc = ccRegEx.test(ccValue);
+    let isValidZIp = zipRegEx.test(zipValue);
+    let isValidCcv = ccvReGex.test(ccvValue);
 
-    let tickedOn=0;
     // Validations for name value
-    if(nameValue===''){
-        e.preventDefault();
-      nameHint.style.display='block';
-      nameHint.parentNode.classList.add('not-valid');
-
-    }
-
-    else{
+    if (nameValue === "") {
+      e.preventDefault();
+      nameHint.style.display = "block";
+      nameHint.parentNode.classList.add("not-valid");
+    } else {
       //check if the name is a valid one
-      if (isValidName){
-      
+      if (isValidName) {
         nameHint.innerText = "This is a valid name";
-        nameHint.classList.add('valid');
-        nameHint.style.display='block';
-      }
-      else{
-        
-        nameHint.innerText='This is not a valid value for a name'
-        nameHint.style.display='block';
-        nameHint.parentNode.classList.add('not-valid');
-        
+        nameHint.classList.add("valid");
+        nameHint.style.display = "block";
+      } else {
+        nameHint.innerText = "This is not a valid value for a name";
+        nameHint.style.display = "block";
+        nameHint.parentNode.classList.add("not-valid");
       }
     }
-    //Validations for email value 
-     if (emailValue === "") {
-       e.preventDefault();
-       emailHint.style.display = "block";
-       emailHint.parentNode.classList.add("not-valid");
-       emailHint.innerText='The email field cannot be empty';
-     } 
-     if(isValidEmail) {
-       //check if the name is a valid one
-      
-         emailHint.innerText = "This is a valid email";
-         emailHint.classList.add("valid");
-         emailHint.style.display = "block";
-     }
-     else{
+    //Validations for email value
+    if (emailValue === "") {
+      e.preventDefault();
+      emailHint.style.display = "block";
+    }
+    if (isValidEmail) {
+      //check if the name is a valid one
+
+      emailHint.innerText = "This is a valid email";
+      emailHint.classList.add("valid");
+      emailHint.style.display = "block";
+    } else {
       emailHint.innerText = "This is not a valid email";
-         emailHint.classList.add("not-valid");
-         emailHint.style.display = "block";
-     }
-     
-     
+      emailHint.parentElement.classList.add("not-valid");
+      emailHint.style.display = "block";
+    }
+    let tickedOn = 0;
+    //Checkbox validations
+    for (let i = 0; i < activityCheckboxes.length; i++) {
+      if (activityCheckboxes[i].checked) {
+        tickedOn += 1;
+      }
+    }
+    if (tickedOn === 0) {
+      e.preventDefault();
+      activitiesLegend.classList.add("not-valid");
 
+      checkboxesHint.style.display = "block";
+    }
+    //CC number validation
+    if (ccValue === "") {
+      ccHint.style.display = "block";
 
- 
-    
+      creditCardInput.parentElement.classList.add("not-valid");
+      ccHint.innerText = "The credit card field cannot be empty";
+    }
+    if (isValidCc) {
+      //check if the CC number is a valid one
 
+      ccHint.innerText = "This is a valid credit card number";
+
+      ccHint.style.display = "block";
+    } else {
+      e.preventDefault();
+      creditCardInput.parentElement.classList.add("not-valid");
+      ccHint.style.display = "block";
+    }
+    //Zipcode validator
+
+    if (zipValue === "") {
+      e.preventDefault();
+      zipHint.style.display = "block";
+      zipcodeInput.parentElement.classList.add("not-valid");
+    }
+
+    if (isValidZIp) {
+      //check if the CC number is a valid one
+
+      zipHint.innerText = "This is a valid zip number";
+
+      zipHint.style.display = "block";
+    } else {
+      e.preventDefault();
+      zipcodeInput.parentElement.classList.add("not-valid");
+      zipHint.style.display = "block";
+    }
+
+    //CVV validator
+    if (ccvValue === "") {
+      e.preventDefault();
+      ccvHint.style.display = "block";
+      ccvInput.parentElement.classList.add("not-valid");
+    }
+
+    if (isValidCcv) {
+      //check if the CC number is a valid one
+
+      ccvHint.innerText = "This is a valid zip number";
+
+      ccvHint.style.display = "block";
+    } else {
+      e.preventDefault();
+      ccvInput.parentElement.classList.add("not-valid");
+      ccvHint.style.display = "block";
+    }
   });
 }
 
