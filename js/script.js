@@ -177,11 +177,8 @@ function formSubmission() {
     } else {
       //check if the name is a valid one
       if (isValidName) {
-       
         nameInput.parentElement.classList.add("valid");
-        
       } else {
-        
         nameHint.style.display = "block";
         nameHint.parentNode.classList.add("not-valid");
       }
@@ -194,9 +191,7 @@ function formSubmission() {
     if (isValidEmail) {
       //check if the name is a valid one
 
-      emailInput.parentElement.classList.add('valid');
-
-      
+      emailInput.parentElement.classList.add("valid");
     } else {
       emailHint.innerText = "This is not a valid email";
       emailHint.parentElement.classList.add("not-valid");
@@ -214,25 +209,20 @@ function formSubmission() {
       activities.classList.add("not-valid");
 
       checkboxesHint.style.display = "block";
+    } else {
+      activities.classList.add("valid");
     }
-    
-    else{
-      activities.classList.add('valid');
-    }
-    
+
     //CC number validation
     if (ccValue === "") {
       ccHint.style.display = "block";
 
       creditCardInput.parentElement.classList.add("not-valid");
-     
     }
     if (isValidCc) {
       //check if the CC number is a valid one
 
-      creditCardInput.parentElement.classList.add('valid');
-
-     
+      creditCardInput.parentElement.classList.add("valid");
     } else {
       e.preventDefault();
       creditCardInput.parentElement.classList.add("not-valid");
@@ -268,9 +258,7 @@ function formSubmission() {
     if (isValidCcv) {
       //check if the CC number is a valid one
 
-      ccvInput.parentElement.classList.add('valid');
-
-      
+      ccvInput.parentElement.classList.add("valid");
     } else {
       e.preventDefault();
       ccvInput.parentElement.classList.add("not-valid");
@@ -278,25 +266,17 @@ function formSubmission() {
     }
   });
 }
-function checkboxAccessibility(){
+function checkboxAccessibility() {
   //loop through the activities checkboxes
-  for (let i=0; i<activityCheckboxes.length;i++){
-  activityCheckboxes[i].addEventListener('focus',(e)=>{
-    activityCheckboxes[i].parentElement.classList.add('focus');
-  
-  });
-  activityCheckboxes[i].addEventListener('blur',(e)=>{
-    activityCheckboxes[i].parentElement.classList.remove('focus');
-});
+  for (let i = 0; i < activityCheckboxes.length; i++) {
+    activityCheckboxes[i].addEventListener("focus", (e) => {
+      activityCheckboxes[i].parentElement.classList.add("focus");
+    });
+    activityCheckboxes[i].addEventListener("blur", (e) => {
+      activityCheckboxes[i].parentElement.classList.remove("focus");
+    });
   }
-
- 
-  }
-
-
-
-
-
+}
 
 focusName();
 jobHandler();
@@ -305,4 +285,3 @@ addActivitiesCost();
 handlePayment();
 formSubmission();
 checkboxAccessibility();
-
