@@ -141,7 +141,7 @@ function handlePayment() {
 
 function formSubmission() {
   formElement.addEventListener("submit", (e) => {
-    let nameRegEx = /^(?!.*\d+.*)[a-zA-ZÀ-ÿ]+$/;
+    let nameRegEx = /^[A-ZÁÉÍÓÚÑa-záéíóúñ]+(?: [A-ZÁÉÍÓÚÑa-záéíóúñ]+)*$/;
     let emailRegEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     let ccRegEx = /^\d{13,16}$/;
     let zipRegEx = /^\d{5}$/;
@@ -177,11 +177,11 @@ function formSubmission() {
     } else {
       //check if the name is a valid one
       if (isValidName) {
-        nameHint.innerText = "This is a valid name";
-        nameHint.classList.add("valid");
-        nameHint.style.display = "block";
+       
+        nameInput.parentElement.classList.add("valid");
+        
       } else {
-        nameHint.innerText = "This is not a valid value for a name";
+        
         nameHint.style.display = "block";
         nameHint.parentNode.classList.add("not-valid");
       }
@@ -194,9 +194,9 @@ function formSubmission() {
     if (isValidEmail) {
       //check if the name is a valid one
 
-      emailHint.innerText = "This is a valid email";
-      emailHint.classList.add("valid");
-      emailHint.style.display = "block";
+      emailInput.parentElement.classList.add('valid');
+
+      
     } else {
       emailHint.innerText = "This is not a valid email";
       emailHint.parentElement.classList.add("not-valid");
@@ -211,23 +211,28 @@ function formSubmission() {
     }
     if (tickedOn === 0) {
       e.preventDefault();
-      activitiesLegend.classList.add("not-valid");
+      activities.classList.add("not-valid");
 
       checkboxesHint.style.display = "block";
     }
+    
+    else{
+      activities.classList.add('valid');
+    }
+    
     //CC number validation
     if (ccValue === "") {
       ccHint.style.display = "block";
 
       creditCardInput.parentElement.classList.add("not-valid");
-      ccHint.innerText = "The credit card field cannot be empty";
+     
     }
     if (isValidCc) {
       //check if the CC number is a valid one
 
-      ccHint.innerText = "This is a valid credit card number";
+      creditCardInput.parentElement.classList.add('valid');
 
-      ccHint.style.display = "block";
+     
     } else {
       e.preventDefault();
       creditCardInput.parentElement.classList.add("not-valid");
@@ -263,9 +268,9 @@ function formSubmission() {
     if (isValidCcv) {
       //check if the CC number is a valid one
 
-      ccvHint.innerText = "This is a valid zip number";
+      ccvInput.parentElement.classList.add('valid');
 
-      ccvHint.style.display = "block";
+      
     } else {
       e.preventDefault();
       ccvInput.parentElement.classList.add("not-valid");
@@ -273,6 +278,25 @@ function formSubmission() {
     }
   });
 }
+function checkboxAccessibility(){
+  //loop through the activities checkboxes
+  for (let i=0; i<activityCheckboxes.length;i++){
+  activityCheckboxes[i].addEventListener('focus',(e)=>{
+    activityCheckboxes[i].parentElement.classList.add('focus');
+  
+  });
+  activityCheckboxes[i].addEventListener('blur',(e)=>{
+    activityCheckboxes[i].parentElement.classList.remove('focus');
+});
+  }
+
+ 
+  }
+
+
+
+
+
 
 focusName();
 jobHandler();
@@ -280,3 +304,5 @@ handleColor();
 addActivitiesCost();
 handlePayment();
 formSubmission();
+checkboxAccessibility();
+
