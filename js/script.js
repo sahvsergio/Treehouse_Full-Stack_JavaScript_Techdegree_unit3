@@ -24,15 +24,6 @@ let bitCoinDiv = document.getElementById("bitcoin");
 
 let paymentOptions = paymentSelect.children;
 
-
-let nameValue = nameInput.value;
-let emailValue = emailInput.value;
-let ccValue = creditCardInput.value;
-let zipValue = zipcodeInput.value;
-let ccvValue = ccvInput.value;
-
-
-
 function focusName() {
   /*When the page first loads, the first text field should have
 the focus state by default to prompt the use*/
@@ -148,45 +139,40 @@ function handlePayment() {
   });
 }
 
-function isValidName(text) {
+function isValidName(text){
   let nameRegEx = /^[A-ZÁÉÍÓÚÑa-záéíóúñ]+(?: [A-ZÁÉÍÓÚÑa-záéíóúñ]+)*$/;
   let validName = nameRegEx.test(text);
   return validName;
-}
 
 
-function isValidEmail(text){
-
- 
- let emailRegEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
- let validEmail = emailRegEx.test(text);
- return validEmail;
 }
 
 function formSubmission() {
   formElement.addEventListener("submit", (e) => {
     
-    
+    let emailRegEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     let ccRegEx = /^\d{13,16}$/;
     let zipRegEx = /^\d{5}$/;
     let ccvReGex = /^\d{3}$/;
 
-    //Assign values
-    
+    //Assing values
+    let nameValue = nameInput.value;
+    let emailValue = emailInput.value;
+    let ccValue = creditCardInput.value;
+    let zipValue = zipcodeInput.value;
+    let ccvValue = ccvInput.value;
 
     // identify hints for all required fields
     let nameHint = document.querySelector("#name-hint");
     let emailHint = document.querySelector("#email-hint");
-
-
     let checkboxesHint = document.querySelector("#activities-hint");
     let ccHint = document.querySelector("#cc-hint");
     let zipHint = document.querySelector("#zip-hint");
     let ccvHint = document.querySelector("#cvv-hint");
 
     //regexes testing variables
-
-   
+    
+    let isValidEmail = emailRegEx.test(emailValue);
     let isValidCc = ccRegEx.test(ccValue);
     let isValidZIp = zipRegEx.test(zipValue);
     let isValidCcv = ccvReGex.test(ccvValue);
@@ -197,32 +183,98 @@ function formSubmission() {
       nameHint.style.display = "block";
       nameHint.parentNode.classList.add("not-valid");
     } else {
-      if(isValidName(nameValue)){
-        nameInput.parentElement.classList.add("valid")
-      
-      }
-      else{
+      //check if the name is a valid one
+      if (isValidName(nameValue)) {
+        nameInput.parentElement.classList.add("valid");
+      } else {
         nameHint.style.display = "block";
-        nameHint.innerText='That is not a valid name'
         nameHint.parentNode.classList.add("not-valid");
-         e.preventDefault();
+        nameHint.innerText=`${nameValue} is not a valid name `;
       }
     }
-
-  
-
-
-
-});
+    //Validations for email value
+    if (emailValue === "") {
+      e.preventDefault();
+      emailHint.style.display = "block";
     }
-      
- 
-    
+    if (isValidEmail) {
+      //check if the name is a valid one
 
-    //validations for email
+      emailInput.parentElement.classList.add("valid");
+    } else {
+      emailHint.innerText = "This is not a valid email";
+      emailHint.parentElement.classList.add("not-valid");
+      emailHint.style.display = "block";
+    }
+    let tickedOn = 0;
+    //Checkbox validations
+    for (let i = 0; i < activityCheckboxes.length; i++) {
+      if (activityCheckboxes[i].checked) {
+        tickedOn += 1;
+      }
+    }
+    if (tickedOn === 0) {
+      e.preventDefault();
+      activities.classList.add("not-valid");
 
+      checkboxesHint.style.display = "block";
+    } else {
+      activities.classList.add("valid");
+    }
 
+    //CC number validation
+    if (ccValue === "") {
+      ccHint.style.display = "block";
 
+      creditCardInput.parentElement.classList.add("not-valid");
+    }
+    if (isValidCc) {
+      //check if the CC number is a valid one
+
+      creditCardInput.parentElement.classList.add("valid");
+    } else {
+      e.preventDefault();
+      creditCardInput.parentElement.classList.add("not-valid");
+      ccHint.style.display = "block";
+    }
+    //Zipcode validator
+
+    if (zipValue === "") {
+      e.preventDefault();
+      zipHint.style.display = "block";
+      zipcodeInput.parentElement.classList.add("not-valid");
+    }
+
+    if (isValidZIp) {
+      //check if the CC number is a valid one
+
+      zipHint.innerText = "This is a valid zip number";
+
+      zipHint.style.display = "block";
+    } else {
+      e.preventDefault();
+      zipcodeInput.parentElement.classList.add("not-valid");
+      zipHint.style.display = "block";
+    }
+
+    //CVV validator
+    if (ccvValue === "") {
+      e.preventDefault();
+      ccvHint.style.display = "block";
+      ccvInput.parentElement.classList.add("not-valid");
+    }
+
+    if (isValidCcv) {
+      //check if the CC number is a valid one
+
+      ccvInput.parentElement.classList.add("valid");
+    } else {
+      e.preventDefault();
+      ccvInput.parentElement.classList.add("not-valid");
+      ccvHint.style.display = "block";
+    }
+  });
+}
 function checkboxAccessibility() {
   //loop through the activities checkboxes
   for (let i = 0; i < activityCheckboxes.length; i++) {
