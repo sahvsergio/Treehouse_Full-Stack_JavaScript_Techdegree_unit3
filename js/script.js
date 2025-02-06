@@ -256,6 +256,7 @@ function formSubmission() {
       e.preventDefault();
       ccvHint.style.display = "block";
       ccvInput.parentElement.classList.add("not-valid");
+      
     }
 
     if (isValidCcv) {
@@ -270,6 +271,7 @@ function formSubmission() {
   }
   else{
     creditCardDiv.hidden =true;
+    
 
 
   }
