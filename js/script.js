@@ -42,7 +42,7 @@ function jobHandler() {
 
     if (titleValue === "other") {
       otherJob.hidden = false;
-      otherJob.disabled = true;
+      otherJob.disabled =false;
     } else {
       otherJob.hidden = true;
       otherJob.disabled = true;
@@ -78,7 +78,7 @@ function addActivitiesCost() {
 
     if (e.target.checked) {
       totalActivitiesCost += targetCost;
-      totalCost.innerHTML = `$${totalActivitiesCost}`;
+      totalCost.innerHTML = `Total:$${totalActivitiesCost}`;
       for (let i = 0; i < activityCheckboxes.length; i++) {
         let targetActivityDate =
           activityCheckboxes[i].getAttribute("data-day-and-time");
@@ -92,7 +92,7 @@ function addActivitiesCost() {
       }
     } else {
       totalActivitiesCost -= targetCost;
-      totalCost.innerHTML = `$${totalActivitiesCost}`;
+      totalCost.innerHTML = `Total:$${totalActivitiesCost}`;
       for (let i = 0; i < activityCheckboxes.length; i++) {
         let targetActivityDate =
           activityCheckboxes[i].getAttribute("data-day-and-time");
@@ -182,7 +182,7 @@ function formSubmission() {
       if (isValidName) {
         nameInput.parentElement.classList.add("valid");
         nameInput.parentElement.classList.remove("not-valid");
-        nameHint.style.display = "block";
+        nameHint.style.display = "none";
       } else {
         nameHint.style.display = "block";
         nameHint.parentNode.classList.add("not-valid");
@@ -221,89 +221,89 @@ function formSubmission() {
       }
     }
     if (tickedOn === 0) {
-      e.preventDefault();
-      activities.classList.add("not-valid");
-      activities.classList.remove("valid");
+        e.preventDefault();
+        activities.classList.add("not-valid");
+        activities.classList.remove("valid");
 
-      checkboxesHint.style.display = "block";
-    } else {
-      activities.classList.add("valid");
-      activities.classList.remove("not-valid");
-
-      checkboxesHint.style.display = "none";
-
-    }
-
-    //CC number validation
-    if (paymentOptions[1].selected === true) {
-      if (ccValue === "") {
-        ccHint.style.display = "block";
-
-        creditCardInput.parentElement.classList.add("not-valid");
-        creditCardInput.parentElement.classList.remove("valid");
-        ccHint.innerText='credit number cannot be empty';
-      }
-      if (isValidCc) {
-        //check if the CC number is a valid one
-
-        creditCardInput.parentElement.classList.add("valid");
-        creditCardInput.parentElement.classList.remove("not-valid");
-        ccHint.style.display = "none";
+        checkboxesHint.style.display = "block";
       } else {
-        e.preventDefault();
-        creditCardInput.parentElement.classList.add("not-valid");
-        creditCardInput.parentElement.classList.remove("valid");
-        ccHint.style.display = "block";
-      }
-      //Zipcode validator
+        activities.classList.add("valid");
+        activities.classList.remove("not-valid");
 
-      if (zipValue === "") {
-        e.preventDefault();
-        zipHint.style.display = "block";
-        zipcodeInput.parentElement.classList.add("not-valid");
-        zipcodeInput.parentElement.classList.remove("valid");
-        zipHint.innerText='Zip code cannot be left blank';
+        checkboxesHint.style.display = "none";
+
       }
 
-      if (isValidZIp) {
-        //check if the CC number is a valid one
+      //CC number validation
+      if (paymentOptions[1].selected === true) {
+        if (ccValue === "") {
+          ccHint.style.display = "block";
 
-        zipcodeInput.parentElement.classList.add("valid");
-        zipcodeInput.parentElement.classList.remove("not-valid");
+          creditCardInput.parentElement.classList.add("not-valid");
+          creditCardInput.parentElement.classList.remove("valid");
+          ccHint.innerText='credit number cannot be empty';
+        }
+        if (isValidCc) {
+          //check if the CC number is a valid one
 
-        zipHint.style.display = "none";
+          creditCardInput.parentElement.classList.add("valid");
+          creditCardInput.parentElement.classList.remove("not-valid");
+          ccHint.style.display = "none";
+        } else {
+          e.preventDefault();
+          creditCardInput.parentElement.classList.add("not-valid");
+          creditCardInput.parentElement.classList.remove("valid");
+          ccHint.style.display = "block";
+        }
+        //Zipcode validator
+
+        if (zipValue === "") {
+          e.preventDefault();
+          zipHint.style.display = "block";
+          zipcodeInput.parentElement.classList.add("not-valid");
+          zipcodeInput.parentElement.classList.remove("valid");
+          zipHint.innerText='Zip code cannot be left blank';
+        }
+
+        if (isValidZIp) {
+          //check if the CC number is a valid one
+
+          zipcodeInput.parentElement.classList.add("valid");
+          zipcodeInput.parentElement.classList.remove("not-valid");
+
+          zipHint.style.display = "none";
+        } else {
+          e.preventDefault();
+          zipcodeInput.parentElement.classList.add("not-valid");
+          zipcodeInput.parentElement.classList.remove("valid");
+          zipHint.style.display = "block";
+        }
+
+        //CVV validator
+        if (ccvValue === "") {
+          e.preventDefault();
+          ccvHint.style.display = "block";
+          ccvInput.parentElement.classList.add("not-valid");
+          ccvInput.parentElement.classList.add("valid");
+          ccvHint.innerText = "Cvv cannot be blank";
+        }
+
+        if (isValidCcv) {
+          //check if the CC number is a valid one
+
+          ccvInput.parentElement.classList.add("valid");
+          ccvInput.parentElement.classList.remove("not-valid");
+          ccvHint.style.display = "none";
+        } else {
+          e.preventDefault();
+          ccvInput.parentElement.classList.add("not-valid");
+          ccvHint.style.display = "block";
+          ccvInput.parentElement.classList.remove("valid");
+        }
       } else {
-        e.preventDefault();
-        zipcodeInput.parentElement.classList.add("not-valid");
-        zipcodeInput.parentElement.classList.remove("valid");
-        zipHint.style.display = "block";
+        creditCardDiv.hidden = true;
       }
-
-      //CVV validator
-      if (ccvValue === "") {
-        e.preventDefault();
-        ccvHint.style.display = "block";
-        ccvInput.parentElement.classList.add("not-valid");
-        ccvInput.parentElement.classList.add("valid");
-        ccvHint.innerText = "Cvv cannot be blank";
-      }
-
-      if (isValidCcv) {
-        //check if the CC number is a valid one
-
-        ccvInput.parentElement.classList.add("valid");
-        ccvInput.parentElement.classList.remove("not-valid");
-        ccvHint.style.display = "none";
-      } else {
-        e.preventDefault();
-        ccvInput.parentElement.classList.add("not-valid");
-        ccvHint.style.display = "block";
-        ccvInput.parentElement.classList.remove("valid");
-      }
-    } else {
-      creditCardDiv.hidden = true;
-    }
-  });
+    });
 }
 function checkboxAccessibility() {
   //loop through the activities checkboxes
@@ -317,6 +317,8 @@ function checkboxAccessibility() {
   }
 }
 
+
+
 focusName();
 jobHandler();
 handleColor();
@@ -324,3 +326,4 @@ addActivitiesCost();
 handlePayment();
 formSubmission();
 checkboxAccessibility();
+
