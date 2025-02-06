@@ -174,13 +174,20 @@ function formSubmission() {
       e.preventDefault();
       nameHint.style.display = "block";
       nameHint.parentNode.classList.add("not-valid");
+      nameHint.parentNode.classList.remove('not-valid')
+     
+    
     } else {
       //check if the name is a valid one
       if (isValidName) {
         nameInput.parentElement.classList.add("valid");
+        nameInput.parentElement.classList.remove("not-valid");
+        nameHint.style.display = "block";
       } else {
         nameHint.style.display = "block";
         nameHint.parentNode.classList.add("not-valid");
+        nameHint.parentNode.classList.add("valid");
+
         nameHint.innerText = `${nameValue} is not a valid name`;
       }
     }
@@ -188,15 +195,22 @@ function formSubmission() {
     if (emailValue === "") {
       e.preventDefault();
 
+
+      emailHint.parentElement.classList.add("not-valid");
+      emailHint.parentElement.classList.remove("valid");
       emailHint.style.display = "block";
+      emailHint.innerText='Email field cannot be blank';
     }
     if (isValidEmail) {
       //check if the name is a valid one
 
       emailInput.parentElement.classList.add("valid");
+      emailInput.parentElement.classList.remove("not-valid");
+      emailHint.style.display = "none";
     } else {
       emailHint.innerText = "This is not a valid email";
       emailHint.parentElement.classList.add("not-valid");
+      emailHint.parentElement.classList.remove("valid");
       emailHint.style.display = "block";
     }
     let tickedOn = 0;
@@ -209,10 +223,15 @@ function formSubmission() {
     if (tickedOn === 0) {
       e.preventDefault();
       activities.classList.add("not-valid");
+      activities.classList.remove("valid");
 
       checkboxesHint.style.display = "block";
     } else {
       activities.classList.add("valid");
+      activities.classList.remove("not-valid");
+
+      checkboxesHint.style.display = "none";
+
     }
 
     //CC number validation
@@ -221,14 +240,19 @@ function formSubmission() {
         ccHint.style.display = "block";
 
         creditCardInput.parentElement.classList.add("not-valid");
+        creditCardInput.parentElement.classList.remove("valid");
+        ccHint.innerText='credit number cannot be empty';
       }
       if (isValidCc) {
         //check if the CC number is a valid one
 
         creditCardInput.parentElement.classList.add("valid");
+        creditCardInput.parentElement.classList.remove("not-valid");
+        ccHint.style.display = "none";
       } else {
         e.preventDefault();
         creditCardInput.parentElement.classList.add("not-valid");
+        creditCardInput.parentElement.classList.remove("valid");
         ccHint.style.display = "block";
       }
       //Zipcode validator
@@ -237,17 +261,21 @@ function formSubmission() {
         e.preventDefault();
         zipHint.style.display = "block";
         zipcodeInput.parentElement.classList.add("not-valid");
+        zipcodeInput.parentElement.classList.remove("valid");
+        zipHint.innerText='Zip code cannot be left blank';
       }
 
       if (isValidZIp) {
         //check if the CC number is a valid one
 
-        zipHint.innerText = "This is a valid zip number";
+        zipcodeInput.parentElement.classList.add("valid");
+        zipcodeInput.parentElement.classList.remove("not-valid");
 
-        zipHint.style.display = "block";
+        zipHint.style.display = "none";
       } else {
         e.preventDefault();
         zipcodeInput.parentElement.classList.add("not-valid");
+        zipcodeInput.parentElement.classList.remove("valid");
         zipHint.style.display = "block";
       }
 
@@ -256,6 +284,7 @@ function formSubmission() {
         e.preventDefault();
         ccvHint.style.display = "block";
         ccvInput.parentElement.classList.add("not-valid");
+        ccvInput.parentElement.classList.add("valid");
         ccvHint.innerText = "Cvv cannot be blank";
       }
 
@@ -263,10 +292,13 @@ function formSubmission() {
         //check if the CC number is a valid one
 
         ccvInput.parentElement.classList.add("valid");
+        ccvInput.parentElement.classList.remove("not-valid");
+        ccvHint.style.display = "none";
       } else {
         e.preventDefault();
         ccvInput.parentElement.classList.add("not-valid");
         ccvHint.style.display = "block";
+        ccvInput.parentElement.classList.remove("valid");
       }
     } else {
       creditCardDiv.hidden = true;
@@ -292,4 +324,3 @@ addActivitiesCost();
 handlePayment();
 formSubmission();
 checkboxAccessibility();
-
