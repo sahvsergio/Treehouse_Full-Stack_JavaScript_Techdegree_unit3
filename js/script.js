@@ -108,7 +108,7 @@ function addActivitiesCost() {
 function handlePayment() {
   //page loads
   //load credit card
-  let ccPayment = (paymentOptions[1].selected = true);
+  let ccPayment = paymentOptions[1].selected = true;
   paypalDiv.hidden = true;
   paypalDiv.disabled = true;
   bitCoinDiv.hidden = true;
@@ -139,17 +139,9 @@ function handlePayment() {
   });
 }
 
-function isValidName(text){
-  let nameRegEx = /^[A-ZÁÉÍÓÚÑa-záéíóúñ]+(?: [A-ZÁÉÍÓÚÑa-záéíóúñ]+)*$/;
-  let validName = nameRegEx.test(text);
-  return validName;
-
-
-}
-
 function formSubmission() {
   formElement.addEventListener("submit", (e) => {
-    
+    let nameRegEx = /^[A-ZÁÉÍÓÚÑa-záéíóúñ]+(?: [A-ZÁÉÍÓÚÑa-záéíóúñ]+)*$/;
     let emailRegEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     let ccRegEx = /^\d{13,16}$/;
     let zipRegEx = /^\d{5}$/;
@@ -171,7 +163,7 @@ function formSubmission() {
     let ccvHint = document.querySelector("#cvv-hint");
 
     //regexes testing variables
-    
+    let isValidName = nameRegEx.test(nameValue);
     let isValidEmail = emailRegEx.test(emailValue);
     let isValidCc = ccRegEx.test(ccValue);
     let isValidZIp = zipRegEx.test(zipValue);
@@ -184,17 +176,18 @@ function formSubmission() {
       nameHint.parentNode.classList.add("not-valid");
     } else {
       //check if the name is a valid one
-      if (isValidName(nameValue)) {
+      if (isValidName) {
         nameInput.parentElement.classList.add("valid");
       } else {
         nameHint.style.display = "block";
         nameHint.parentNode.classList.add("not-valid");
-        nameHint.innerText=`${nameValue} is not a valid name `;
+        nameHint.innerText=`${nameValue} is not a valid name`;
       }
     }
     //Validations for email value
     if (emailValue === "") {
       e.preventDefault();
+
       emailHint.style.display = "block";
     }
     if (isValidEmail) {
@@ -223,11 +216,12 @@ function formSubmission() {
     }
 
     //CC number validation
-    if (ccValue === "") {
-      ccHint.style.display = "block";
+    if (paymentOptions[1].selected===true){
+      if (ccValue === "") {
+        ccHint.style.display = "block";
 
-      creditCardInput.parentElement.classList.add("not-valid");
-    }
+        creditCardInput.parentElement.classList.add("not-valid");
+      }
     if (isValidCc) {
       //check if the CC number is a valid one
 
@@ -273,6 +267,13 @@ function formSubmission() {
       ccvInput.parentElement.classList.add("not-valid");
       ccvHint.style.display = "block";
     }
+  }
+  else{
+    creditCardDiv.hidden =true;
+
+
+  }
+
   });
 }
 function checkboxAccessibility() {

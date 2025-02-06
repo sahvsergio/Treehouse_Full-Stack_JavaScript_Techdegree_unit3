@@ -36,7 +36,7 @@ if (zipValue === "") {
   zipcodeInput.parentElement.classList.add("not-valid");
 }
 
-if (isValidZIp) {
+if (isValidZIp(zipValue)) {
   //check if the CC number is a valid one
 
   zipHint.innerText = "This is a valid zip number";
