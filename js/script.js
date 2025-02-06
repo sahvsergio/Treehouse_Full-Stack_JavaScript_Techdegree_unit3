@@ -24,6 +24,35 @@ let bitCoinDiv = document.getElementById("bitcoin");
 
 let paymentOptions = paymentSelect.children;
 
+
+let nameRegEx = /^[A-ZÁÉÍÓÚÑa-záéíóúñ]+(?: [A-ZÁÉÍÓÚÑa-záéíóúñ]+)*$/;
+let emailRegEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+let ccRegEx = /^\d{13,16}$/;
+let zipRegEx = /^\d{5}$/;
+    let ccvReGex = /^\d{3}$/;
+
+//Assing values
+let nameValue = nameInput.value;
+let emailValue = emailInput.value;
+let ccValue = creditCardInput.value;
+let zipValue = zipcodeInput.value;
+let ccvValue = ccvInput.value;
+
+let nameHint = document.querySelector("#name-hint");
+let emailHint = document.querySelector("#email-hint");
+let checkboxesHint = document.querySelector("#activities-hint");
+let ccHint = document.querySelector("#cc-hint");
+let zipHint = document.querySelector("#zip-hint");
+let ccvHint = document.querySelector("#cvv-hint");
+
+//regexes testing variables
+let isValidName = nameRegEx.test(nameValue);
+let isValidEmail = emailRegEx.test(emailValue);
+let isValidCc = ccRegEx.test(ccValue);
+let isValidZIp = zipRegEx.test(zipValue);
+let isValidCcv = ccvReGex.test(ccvValue);
+
+
 function focusName() {
   /*When the page first loads, the first text field should have
 the focus state by default to prompt the use*/
@@ -141,33 +170,9 @@ function handlePayment() {
 
 function formSubmission() {
   formElement.addEventListener("submit", (e) => {
-    let nameRegEx = /^[A-ZÁÉÍÓÚÑa-záéíóúñ]+(?: [A-ZÁÉÍÓÚÑa-záéíóúñ]+)*$/;
-    let emailRegEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    let ccRegEx = /^\d{13,16}$/;
-    let zipRegEx = /^\d{5}$/;
-    let ccvReGex = /^\d{3}$/;
-
-    //Assing values
-    let nameValue = nameInput.value;
-    let emailValue = emailInput.value;
-    let ccValue = creditCardInput.value;
-    let zipValue = zipcodeInput.value;
-    let ccvValue = ccvInput.value;
-
+    l
     // identify hints for all required fields
-    let nameHint = document.querySelector("#name-hint");
-    let emailHint = document.querySelector("#email-hint");
-    let checkboxesHint = document.querySelector("#activities-hint");
-    let ccHint = document.querySelector("#cc-hint");
-    let zipHint = document.querySelector("#zip-hint");
-    let ccvHint = document.querySelector("#cvv-hint");
-
-    //regexes testing variables
-    let isValidName = nameRegEx.test(nameValue);
-    let isValidEmail = emailRegEx.test(emailValue);
-    let isValidCc = ccRegEx.test(ccValue);
-    let isValidZIp = zipRegEx.test(zipValue);
-    let isValidCcv = ccvReGex.test(ccvValue);
+    
 
     // Validations for name value
     if (nameValue === "") {
