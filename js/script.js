@@ -186,11 +186,13 @@ function formSubmission() {
       } else {
         nameHint.style.display = "block";
         nameHint.parentNode.classList.add("not-valid");
+        nameHint.innerText = `${nameValue} is not a valid name`;
       }
     }
     //Validations for email value
     if (emailValue === "") {
       e.preventDefault();
+
       emailHint.style.display = "block";
     }
     if (isValidEmail) {
@@ -219,55 +221,60 @@ function formSubmission() {
     }
 
     //CC number validation
-    if (ccValue === "") {
-      ccHint.style.display = "block";
+    if (paymentOptions[1].selected === true) {
+      if (ccValue === "") {
+        ccHint.style.display = "block";
 
-      creditCardInput.parentElement.classList.add("not-valid");
-    }
-    if (isValidCc) {
-      //check if the CC number is a valid one
+        creditCardInput.parentElement.classList.add("not-valid");
+      }
+      if (isValidCc) {
+        //check if the CC number is a valid one
 
-      creditCardInput.parentElement.classList.add("valid");
+        creditCardInput.parentElement.classList.add("valid");
+      } else {
+        e.preventDefault();
+        creditCardInput.parentElement.classList.add("not-valid");
+        ccHint.style.display = "block";
+      }
+      //Zipcode validator
+
+      if (zipValue === "") {
+        e.preventDefault();
+        zipHint.style.display = "block";
+        zipcodeInput.parentElement.classList.add("not-valid");
+      }
+
+      if (isValidZIp) {
+        //check if the CC number is a valid one
+
+        zipHint.innerText = "This is a valid zip number";
+
+        zipHint.style.display = "block";
+      } else {
+        e.preventDefault();
+        zipcodeInput.parentElement.classList.add("not-valid");
+        zipHint.style.display = "block";
+      }
+
+      //CVV validator
+      if (ccvValue === "") {
+        e.preventDefault();
+        ccvHint.style.display = "block";
+        ccvInput.parentElement.classList.add("not-valid");
+        ccvHint.innerText = "Cvv cannot be blank";
+      }
+
+      if (isValidCcv) {
+        //check if the CC number is a valid one
+
+        ccvInput.parentElement.classList.add("valid");
+      } else {
+        e.preventDefault();
+        ccvInput.parentElement.classList.add("not-valid");
+        ccvHint.style.display = "block";
+      }
     } else {
-      e.preventDefault();
-      creditCardInput.parentElement.classList.add("not-valid");
-      ccHint.style.display = "block";
-    }
-    //Zipcode validator
-
-    if (zipValue === "") {
-      e.preventDefault();
-      zipHint.style.display = "block";
-      zipcodeInput.parentElement.classList.add("not-valid");
-    }
-
-    if (isValidZIp) {
-      //check if the CC number is a valid one
-
-      zipHint.innerText = "This is a valid zip number";
-
-      zipHint.style.display = "block";
-    } else {
-      e.preventDefault();
-      zipcodeInput.parentElement.classList.add("not-valid");
-      zipHint.style.display = "block";
-    }
-
-    //CVV validator
-    if (ccvValue === "") {
-      e.preventDefault();
-      ccvHint.style.display = "block";
-      ccvInput.parentElement.classList.add("not-valid");
-    }
-
-    if (isValidCcv) {
-      //check if the CC number is a valid one
-
-      ccvInput.parentElement.classList.add("valid");
-    } else {
-      e.preventDefault();
-      ccvInput.parentElement.classList.add("not-valid");
-      ccvHint.style.display = "block";
+      creditCardDiv.hidden = true;
     }
   });
 }
@@ -283,6 +290,8 @@ function checkboxAccessibility() {
   }
 }
 
+
+
 focusName();
 jobHandler();
 handleColor();
@@ -290,3 +299,4 @@ addActivitiesCost();
 handlePayment();
 formSubmission();
 checkboxAccessibility();
+checkFieldChanges();
