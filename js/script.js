@@ -173,8 +173,9 @@ function formSubmission() {
     if (nameValue === "") {
       e.preventDefault();
       nameHint.style.display = "block";
-      nameHint.parentNode.classList.add("not-valid");
-      nameHint.parentNode.classList.remove('not-valid')
+      nameInput.parentElement.classList.add("not-valid");
+      nameInput.parentElement.classList.remove('valid');
+      nameHint.innerText='Name field cannot be blank';
      
     
     } else {
@@ -186,7 +187,7 @@ function formSubmission() {
       } else {
         nameHint.style.display = "block";
         nameHint.parentNode.classList.add("not-valid");
-        nameHint.parentNode.classList.add("valid");
+        nameHint.parentNode.classList.remove("valid");
 
         nameHint.innerText = `${nameValue} is not a valid name`;
       }
